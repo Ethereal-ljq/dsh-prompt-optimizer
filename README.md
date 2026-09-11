@@ -1,6 +1,24 @@
 # dsh-prompt-optimizer · 提示词优化器（DSH Web 插件）
 
-> 你在输入框按回车的那一刻，消息**不会**直接发出去 —— 先由**另一个 AI（传话者）**把它整理成一条**可以直接发给工作 AI 的命令**，你看到满意结果再决定发送。
+**中文** ｜ [English](README.en.md)
+
+> 🌐 **界面语言说明**：本插件的**操作界面（UI）目前有且只有中文**，暂未提供英文或其他语言的界面。英文 README 仅用于介绍，安装后界面依然是中文。
+> *UI note: the plugin's user interface is currently **Chinese-only**. The English README is documentation only.*
+
+---
+
+## ⚠️ 请先读这四点（作者郑重声明）
+
+1. **本插件目的是优化提示词**，节省因为书写提示词而消耗的时间，并帮助用户更准确地传达意思；**本质上是让 AI 可以多一步自我规划、约束**。
+2. 本插件在 **DeepSeek-V4.1-Flash** 这种**能力较强、但发挥受提示词影响严重**的大模型上有**明显作用**。
+3. 本人**仅使用此插件测试过部分 OneShot 类型**的任务，并在这些任务上取得了**突破性效果**；因此**无法保证此插件在所有任务中都能起到巨大的正向作用**，**建议对此插件的实际作用持保守意见**。
+4. 本插件**完全开源**，支持**任何人、任何形式**使用并修改此插件，也**欢迎提出建议，以及各种测试**。
+
+---
+
+## 它做什么
+
+你在输入框按回车的那一刻，消息**不会**直接发出去 —— 先由**另一个 AI（传话者）**把它整理成一条**可以直接发给工作 AI 的命令**，你看到满意结果再决定发送。
 
 - 角色是**传话**，不是陪聊：优化 AI 明确知道自己是"把用户的意思转达给工作 AI"，**不回答你、不替你干活、不向你提问**；产出是命令正文本身（没有「优化后的提示词 / 改动说明」这类元话语），可原样发给下游 AI。
 - 优化用的模型、档位、权限都**与对话本身独立**，不会动你的对话模型。
@@ -18,9 +36,9 @@
 两步：先把包装进 profile，再把包名登记为 bundle 层。
 
 ```bash
-# 1) 装包（tarball / 本地目录 / GitHub 仓库都行）
+# 1) 装包（GitHub 仓库 / tarball / 本地目录都行）
+dsh plugin --profile web add github:WestFox-AwA/dsh-prompt-optimizer#v0.1.1-beta.1
 dsh plugin --profile web add ./dsh-external-dsh-prompt-optimizer-0.1.1-beta.1.tgz
-dsh plugin --profile web add github:<用户名>/<仓库名>#v0.1.1-beta.1
 
 # 2) 在 ~/.dsh/profiles/web/package.json 的 dsh.profile.bundles 里加一行：
 #      "@dsh-external/dsh-prompt-optimizer"
@@ -57,19 +75,7 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 - 至少一条可用的 LLM 路由（优化默认跟随当前会话模型；也可在插件的模型胶囊里单独指定）。
 - 插件本身**零运行时依赖、无需构建**（`lib/` 里就是可直接运行的 JavaScript）。
 
-## 一·五、分享给别人
-
-两种方式，任选：
-
-1. **给 tarball**：把 `dsh-external-dsh-prompt-optimizer-0.1.1-beta.1.tgz` 发给对方 → 按上面「方式 A」两步装好。
-2. **给 GitHub 仓库**（对方直接一条命令）：
-
-   ```bash
-   dsh plugin --profile web add github:<用户名>/<仓库名>#v0.1.1-beta.1
-   # 再把 "@dsh-external/dsh-prompt-optimizer" 加进 dsh.profile.bundles，重启
-   ```
-
-   pnpm 会拉取仓库并按包内 `package.json` 安装（仓库里 `lib/` 已是可运行代码，无需构建）。
+---
 
 ## 二、30 秒上手
 
@@ -81,6 +87,8 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 
 > 输入框左侧的三个控件，从左到右是：**优化档位**（滑块）、**优化权限**（滑块）、**优化模型**（胶囊），再右边是 **使用帮助（?）**。点 `?` 有同样的简明教程 + 署名。
 
+---
+
 ## 三、三个控件怎么选
 
 | 控件 | 取值 | 说明 |
@@ -89,9 +97,9 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 | **优化权限** | 需要审查 / 自动输出 | 审查＝产出可编辑，点「确认提交」才发；自动＝优化完成即自动发出（**失败也会按原文发出**，绝不静默吞消息） |
 | **优化模型** | 任意 provider/模型 | 只影响优化，不动对话模型；弹层里会标出「会话当前」模型；某家 provider 连不上会被标注「不可达」，不会拖慢整张列表 |
 
-> **档位与权限是"每个会话各一份"的**：在 A 会话调到「极端 + 自动」，切到 B 仍是 B 之前的值（没设过的会话继承你上次用的值）。模型同理。
->
 > **想要发挥插件所有能力且自动化，建议【极端】+【自动】。**
+
+---
 
 ## 四、迷你窗
 
@@ -102,6 +110,8 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 - **关键按钮永不消失**：底部是**常驻操作栏**（确认提交 / 重新生成 / 回退 / 放行 / 重试），不随内容滚动，窗口再小也点得到；窗口很矮时会自动压缩内容区。
 - **思考 token 计数**：状态行显示本次总用量（如 `Σ 1.1k tok`），「思考」标题右侧显示**思考消耗的 token**（provider 不上报时显示 `— tok`），「产出」标题右侧显示输出 token，旁边还有字数。
 
+---
+
 ## 五、常见问题
 
 | 现象 | 原因 / 处理 |
@@ -111,6 +121,9 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 | 提示"优化模型不可用 → 已按原文发出" | 所选模型连不上（例如本机 `ollama` 未启动）。插件会**自动回退到会话默认模型**，下次用默认模型 |
 | 想临时不用 | 把**档位**滑块拉到最左「关闭」 |
 | 弹层里某家模型标「不可达」 | 该 provider 当前不可用（未启动/无权限），不影响其它模型 |
+| 界面能换英文吗 | **暂时不能**，当前 UI 有且只有中文 |
+
+---
 
 ## 六、卸载
 
@@ -118,20 +131,27 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 dsh plugin --profile web remove @dsh-external/dsh-prompt-optimizer
 ```
 
-插件设置存在 `~/.dsh/prompt-optimizer.json`（档位/权限/模型/迷你窗尺寸），如需彻底清理可一并删除。
+若用"方式 B"安装，请同时删除 `cordis.patch.yml` 里那条 `insert`。插件设置存在 `~/.dsh/prompt-optimizer.json`（档位/权限/模型/迷你窗尺寸/按会话设置），如需彻底清理可一并删除。
+
+---
 
 ## 七、实现要点（给想改代码的人）
 
-- **两个半边**：`lib/index.js`（宿主：三档系统提示、只读工具循环、SSE 流式运行、模型目录、状态落盘、HTTP 路由）＋ `lib/client.js`（浏览器：控件行、模型/帮助弹层、迷你窗、捕获阶段拦截回车与发送按钮）。
+- **两个半边**：`lib/index.js`（宿主：三档系统提示与传话框架、只读工具循环、SSE 流式运行、模型目录、状态落盘、HTTP 路由）＋ `lib/client.js`（浏览器：控件行、模型/帮助弹层、迷你窗、捕获阶段拦截回车与发送按钮）。
 - **拦截是捕获阶段**在 `window` 上做的（早于 React 与编辑器自身处理）：`Shift+Enter` 换行、`/` 命令、空草稿、仅附件、输入卡片之外的回车一律放行。
 - **不改动官方发送链路**：确认发送时用官方 `inputActions.setDraft()` + `submit()`，与手动发送完全同一条路。
-- 产物是纯 JavaScript（无构建步骤）；`ACCEPTANCE.md` 是逐格验收清单，`evidence/` 是机器留痕（自检报告、遥测、对比数据）。
+- 产物是纯 JavaScript（无构建步骤）；`ACCEPTANCE.md` 是逐格验收清单，`evidence/` 是机器留痕（自检报告、遥测、对照数据）。
+
+---
 
 ## 八、隐私与边界
 
 - 优化请求只发送**你的输入文本**，以及（高级/极端档）**当前项目的目录树摘要与关键文件名**；极端档的只读查证限定在项目根目录内，不写盘、不执行命令。
 - 迷你窗默认不发送任何消息：只有「确认提交」/「自动输出」/「放行本条」三条路径会把内容交回官方发送链路。
+- 本插件为客户端 + 宿主本地插件，不引入任何第三方服务。
 
 ---
 
-License: BSD-3-Clause
+## 九、许可与协作
+
+**BSD-3-Clause**。完全开源：**任何人、任何形式**使用与修改都欢迎；也欢迎提 Issue、提 PR、以及各种测试反馈。见 [LICENSE](LICENSE) 与 [CHANGELOG.md](CHANGELOG.md)。

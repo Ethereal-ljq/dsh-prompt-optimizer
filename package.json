@@ -10,7 +10,8 @@
                   "README.md",
                   "ACCEPTANCE.md",
                   "LICENSE",
-                  "CHANGELOG.md"
+                  "CHANGELOG.md",
+                  "README.en.md"
               ],
     "keywords":  [
                      "dsh",
