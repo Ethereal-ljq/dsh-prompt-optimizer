@@ -1,0 +1,776 @@
+{
+  "plugin": "dsh-prompt-optimizer",
+  "token": "t39",
+  "kind": "selftest",
+  "sessionId": "session-ae0b2c09-6371-4db2-b1f6-0347cbe27ced",
+  "windowStart": 1789057146698,
+  "windowEnd": 1789057201953,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0",
+  "env": {
+    "sendLabels": [
+      "发送消息",
+      "排队发送",
+      "插话发送"
+    ],
+    "interceptCount": 6,
+    "intercepts": [
+      {
+        "t": 1789057147122,
+        "kind": "keydown-enter",
+        "text": "DPO-回车拦截测试：把那个东西弄一下"
+      },
+      {
+        "t": 1789057147122,
+        "kind": "optimize-start",
+        "text": "DPO-回车拦截测试：把那个东西弄一下",
+        "tier": "basic",
+        "permission": "review"
+      },
+      {
+        "t": 1789057147771,
+        "kind": "click-send",
+        "text": "DPO-按钮拦截测试：把那个东西弄一下",
+        "label": "发送消息"
+      },
+      {
+        "t": 1789057147771,
+        "kind": "optimize-start",
+        "text": "DPO-按钮拦截测试：把那个东西弄一下",
+        "tier": "basic",
+        "permission": "review"
+      },
+      {
+        "t": 1789057154119,
+        "kind": "keydown-enter",
+        "text": "测试不要预览文件夹内的其他文件,制作一个单html程序,要求是极其精细的现代主战坦克模型,可以预览,操控,真实,帅气,炫技写真."
+      },
+      {
+        "t": 1789057154119,
+        "kind": "optimize-start",
+        "text": "测试不要预览文件夹内的其他文件,制作一个单html程序,要求是极其精细的现代主战坦克模型,可以预览,操控,真实,帅气,炫技写真.",
+        "tier": "extreme",
+        "permission": "review"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "id": "S0",
+      "name": "骨架在位",
+      "action": "读取真实 DOM 结构",
+      "expected": "卡片/编辑器/发送按钮均定位到",
+      "observed": {
+        "card": true,
+        "editor": true,
+        "sendButton": true,
+        "sendLabel": "发送消息",
+        "labelSet": [
+          "发送消息",
+          "排队发送",
+          "插话发送"
+        ],
+        "cardButtons": [
+          "指令",
+          "添加附件",
+          "访问模式，当前：工作区内修改",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "选择模型，当前 deepseek-v4.1-flash-expires-on-0910，推理等级 Max",
+          "发送消息"
+        ],
+        "lastButton": "发送消息",
+        "sessionId": "session-44ddf9a2-04b7-4373-9729-606aeeb868f0",
+        "running": false,
+        "actions": true
+      },
+      "pass": true
+    },
+    {
+      "id": "E2",
+      "name": "IME 组合态回车不误拦",
+      "action": "setDraft→focus→派发 isComposing:true 的 Enter",
+      "expected": "拦截计数不变、占位浮层不出现、消息不落库",
+      "observed": {
+        "interceptsBefore": 0,
+        "interceptsAfter": 0,
+        "overlayOpen": false,
+        "defaultPrevented": false,
+        "reachedBubble": true,
+        "other": 0,
+        "queuedCleanup": {
+          "found": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "E1",
+      "name": "正常回车被拦截",
+      "action": "setDraft→focus→派发普通 Enter",
+      "expected": "拦截计数 +1、占位浮层出现、事件未传播到冒泡期、消息不落库",
+      "observed": {
+        "interceptsBefore": 0,
+        "interceptsAfter": 2,
+        "overlayOpen": true,
+        "overlaySrc": "run",
+        "overlayText": "DPO-回车拦截测试：把那个东西弄一下",
+        "reachedBubble": false,
+        "other": 0,
+        "defaultPrevented": true,
+        "interceptedKind": "optimize-start",
+        "queuedCleanup": {
+          "found": false
+        }
+      },
+      "pass": false
+    },
+    {
+      "id": "E4",
+      "name": "非发送按钮不拦截（对照）",
+      "action": "对卡片内每个按钮求值 wouldInterceptClick + 向编辑器派发 click",
+      "expected": "仅发送按钮被判为接管（1 个 true）；编辑器点击不触发拦截",
+      "observed": {
+        "table": [
+          {
+            "label": "指令",
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": "添加附件",
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": "访问模式，当前：工作区内修改",
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": null,
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": null,
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": null,
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": null,
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": null,
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": null,
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": null,
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": "选择模型，当前 deepseek-v4.1-flash-expires-on-0910，推理等级 Max",
+            "would": false,
+            "byLabel": false,
+            "isLast": false,
+            "isStop": false
+          },
+          {
+            "label": "发送消息",
+            "would": true,
+            "byLabel": true,
+            "isLast": true,
+            "isStop": false
+          }
+        ],
+        "trueCount": 1,
+        "interceptsBefore": 2,
+        "interceptsAfter": 2
+      },
+      "pass": true
+    },
+    {
+      "id": "E3",
+      "name": "发送按钮 click 被拦截",
+      "action": "setDraft→派发 click 到主按钮（标签或结构位命中）",
+      "expected": "拦截计数 +1、占位浮层出现、事件未传播、消息不落库",
+      "observed": {
+        "interceptsBefore": 2,
+        "interceptsAfter": 4,
+        "overlayOpen": true,
+        "overlaySrc": "run",
+        "reachedBubble": false,
+        "other": 0,
+        "label": "发送消息",
+        "byLabel": true,
+        "isLast": true,
+        "defaultPrevented": true,
+        "queuedCleanup": {
+          "found": false
+        }
+      },
+      "pass": false
+    },
+    {
+      "id": "E5",
+      "name": "setDraft 投影回读",
+      "action": "setDraft(中文) → 回读；setDraft(超长) → 回读",
+      "expected": "两次回读与写入完全一致",
+      "observed": {
+        "cnLen": 19,
+        "cnBackLen": 19,
+        "cnEqual": true,
+        "longLen": 1206,
+        "longBackLen": 1206,
+        "longEqual": true
+      },
+      "pass": true
+    },
+    {
+      "id": "E6",
+      "name": "交付链路+正控",
+      "action": "临时解除拦截后派发 Enter",
+      "expected": "文本进入官方待处理队列并可撤销",
+      "observed": {
+        "skipped": true,
+        "reason": "会话当前非 running（idle 提交会直接落库，故意不测）"
+      },
+      "pass": false
+    },
+    {
+      "id": "F1",
+      "name": "三控件落位",
+      "action": "定位三个控件，并与官方「访问模式」「选择模型」做文档顺序 + 几何核对",
+      "expected": "三控件存在；顺序为 权限设置 → 档位 → 权限 → 模型入口 → 官方模型座位；与权限设置同一行",
+      "observed": {
+        "exists": {
+          "tier": true,
+          "perm": true,
+          "model": true,
+          "permOfficial": true,
+          "modelOfficial": true
+        },
+        "order": {
+          "permBeforeTier": true,
+          "tierBeforePerm": true,
+          "permBeforeModel": true,
+          "modelBeforeOfficial": true
+        },
+        "rects": {
+          "tier": {
+            "x": 573,
+            "y": 520,
+            "w": 64,
+            "h": 24
+          },
+          "perm": {
+            "x": 645,
+            "y": 520,
+            "w": 64,
+            "h": 24
+          },
+          "model": {
+            "x": 717,
+            "y": 520,
+            "w": 130,
+            "h": 24
+          },
+          "permOfficial": {
+            "x": 435,
+            "y": 518,
+            "w": 126,
+            "h": 28
+          },
+          "modelOfficial": {
+            "x": 1293,
+            "y": 518,
+            "w": 275,
+            "h": 28
+          }
+        },
+        "sameRow": true,
+        "text": {
+          "tier": "普通",
+          "perm": "审查",
+          "model": "模型默认（跟随会话）"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "F2",
+      "name": "档位=关闭 → 权限置灰联动",
+      "action": "真实点击「关闭」段 → 试点权限段 → 点回「普通」段 → 再点权限段",
+      "expected": "关闭档：权限段 disabled 且点击无效、拦截停用；回到普通档：权限段恢复可点且能切换",
+      "observed": {
+        "offState": {
+          "tier": "off",
+          "armed": false,
+          "disabled": [
+            true,
+            true
+          ],
+          "permOpacity": "0.45"
+        },
+        "permBeforeClick": "review",
+        "permAfterClickWhileOff": "review",
+        "onState": {
+          "tier": "basic",
+          "armed": true,
+          "disabled": [
+            false,
+            false
+          ],
+          "permOpacity": "1"
+        },
+        "permAfterClickWhileOn": "auto",
+        "permOpacityOff": "0.45",
+        "permOpacityOn": "1"
+      },
+      "pass": true
+    },
+    {
+      "id": "F3",
+      "name": "零位移/零遮挡（A/B）",
+      "action": "记录官方控件 rect → 隐藏本插件控件 → 复测 → 恢复后再测",
+      "expected": "隐藏前后官方控件 rect 完全一致（±1px）；本插件内容不横向溢出；恢复后位置回到原样",
+      "observed": {
+        "officialCount": 5,
+        "drift": [],
+        "overflow": {
+          "scrollW": 299,
+          "clientW": 299
+        },
+        "restored": true,
+        "ourRect": {
+          "x": 573,
+          "y": 519,
+          "w": 299,
+          "h": 26
+        },
+        "samples": [
+          {
+            "label": "指令",
+            "r": {
+              "x": 355,
+              "y": 518,
+              "w": 28,
+              "h": 28
+            }
+          },
+          {
+            "label": "添加附件",
+            "r": {
+              "x": 395,
+              "y": 518,
+              "w": 28,
+              "h": 28
+            }
+          },
+          {
+            "label": "访问模式，当前：工作区内修改",
+            "r": {
+              "x": 435,
+              "y": 518,
+              "w": 126,
+              "h": 28
+            }
+          },
+          {
+            "label": "选择模型，当前 deepseek-v4.1-flash-expires-on-0910，推理等级 Max",
+            "r": {
+              "x": 1293,
+              "y": 518,
+              "w": 275,
+              "h": 28
+            }
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "G",
+      "name": "放行白名单与 fail-open",
+      "action": "逐条复现放行清单（真实派发 + 谓词级）并核对 fail-open 正控",
+      "expected": "五条放行项均不被接管且事件继续传播；未命中时官方链路照常发出（无重复、无卡死）",
+      "observed": {
+        "passRows": [
+          {
+            "id": "G1",
+            "name": "Shift+Enter 换行",
+            "mode": "真实派发",
+            "intercepted": false,
+            "reachedBubble": true,
+            "draftLenAfter": 10,
+            "hasNewline": true
+          },
+          {
+            "id": "G5",
+            "name": "卡片外回车（设置页/重命名框同类）",
+            "mode": "真实派发",
+            "activeOutsideCard": true,
+            "intercepted": false,
+            "reachedBubble": true,
+            "defaultPrevented": false
+          },
+          {
+            "id": "G2",
+            "name": "空白草稿（空草稿 steer 手势）",
+            "mode": "真实派发",
+            "intercepted": false,
+            "reachedBubble": true,
+            "queueBefore": 0,
+            "queueAfter": 0
+          },
+          {
+            "id": "G3",
+            "name": "/ 命令",
+            "mode": "真实派发（/permission，popupSelect 型）",
+            "predicate": false,
+            "intercepted": false,
+            "reachedBubble": true,
+            "other": 0,
+            "defaultPrevented": true,
+            "phaseAfterDispatch": "plain",
+            "claimToken": null,
+            "officialEngaged": false,
+            "accessUnchanged": true
+          },
+          {
+            "id": "G4",
+            "name": "仅附件发送（草稿文本为空）",
+            "mode": "谓词级（判定只看草稿文本）",
+            "keyPredicate": false,
+            "clickPredicate": false
+          }
+        ],
+        "alive": {
+          "controlsAlive": true,
+          "tier": "extreme",
+          "armed": true,
+          "editorFocusable": true,
+          "interceptCount": 4
+        },
+        "failOpen": {}
+      },
+      "pass": false
+    },
+    {
+      "id": "I1",
+      "name": "查证动作在浮层可见",
+      "action": "拉取 /trace → 打开占位浮层 → 统计渲染出的 trace 行",
+      "expected": "接口有数据且浮层内渲染出 ≥1 行查证动作（工具/参数/耗时/结果行数）",
+      "observed": {
+        "apiOk": true,
+        "normalSteps": 9,
+        "cappedSteps": 6,
+        "converged": true,
+        "renderedRows": 0,
+        "hostPresent": false,
+        "sample": []
+      },
+      "pass": false
+    },
+    {
+      "id": "J1",
+      "name": "可拖动浮层（跟手/边界/穿透/清理/开窗夹紧/改尺寸）",
+      "action": "合成 pointerdown→move×8→up 位移(+120,+80)；再拖 +5000；elementFromPoint 验穿透；写回视口外旧坐标后重开；右下角手柄拖拽改尺寸；关闭后查 DOM 与监听计数",
+      "expected": "位移与手势 1:1（±6px）、面板始终在视口内、容器穿透/面板可点、视口外旧坐标重开后仍在可见区、右下角可改尺寸且不越界、关闭后节点与监听均清理、拖动期间 React 渲染 ≤2",
+      "observed": {
+        "follow": null,
+        "inView": false,
+        "layerPointerEvents": null,
+        "panelPointerEvents": null,
+        "sendReachable": true,
+        "outsideHitsOurs": false,
+        "insideHitsOurs": false,
+        "closedRemoved": true,
+        "resizeListenersAfterClose": 0,
+        "rendersDuringDrag": 0,
+        "clampOnOpen": false,
+        "clampObserved": null,
+        "resize": null,
+        "resizeOk": false,
+        "clickGuard": null,
+        "guardOk": false,
+        "rectAfterClamp": null,
+        "viewport": {
+          "w": 1699,
+          "h": 935
+        }
+      },
+      "pass": false
+    },
+    {
+      "id": "K1",
+      "name": "流式思考与产出（分区/增量/首字/失败态/重试）",
+      "action": "真实启动一次优化并采样两栏字数；再用未注册 provider 触发真实失败并点重试",
+      "expected": "两栏独立且不混、字数持续增长、首字 ≤2s（不白屏）、失败有可读原因+重试且产出栏为空、重试后恢复出字",
+      "observed": {
+        "firstPaintMs": 655,
+        "panesEarly": {
+          "reasoning": false,
+          "text": false
+        },
+        "snap1": {
+          "r": 3,
+          "t": 0
+        },
+        "snap2": {
+          "r": 96,
+          "t": 0
+        },
+        "separated": false,
+        "runStatus": "done",
+        "textChars": 5750,
+        "reasoningChars": 2210,
+        "fail": {
+          "status": "error",
+          "error": "llm-error: {\"message\":\"no adapter registered for provider \\\"dpo-invalid-provider\\\"\",\"code\":\"NO_ADAPTER\"}",
+          "errorNodeText": null,
+          "hasRetry": false,
+          "textEmpty": true
+        },
+        "recovered": false
+      },
+      "pass": false
+    },
+    {
+      "id": "L1",
+      "name": "审查态与双按钮",
+      "action": "会话 idle：跳过破坏性提交（避免消息永久落库）",
+      "expected": "仅验证可编辑/可滚/配色",
+      "observed": {
+        "skippedSubmit": true,
+        "edited": false,
+        "scrollable": false,
+        "sameAccent": false,
+        "regenIsRed": false
+      },
+      "pass": false
+    },
+    {
+      "id": "L1",
+      "name": "审查态与双按钮（可编辑/可滚/配色/提交链路）",
+      "action": "写入超长编辑文本→派发 input；取官方发送按钮与『确认提交』计算色；点确认提交→查输入框与官方待处理队列→宿主撤销",
+      "expected": "编辑值被采纳、超长可滚、确认提交与发送按钮同色、重新生成为红、提交后输入框清空且文本进入官方队列（零污染）",
+      "observed": {
+        "hasTextarea": false,
+        "hasConfirm": false,
+        "hasRegen": false,
+        "edited": false,
+        "scroll": null,
+        "scrollable": false,
+        "sendBg": "rgb(103, 158, 254)",
+        "confirmBg": null,
+        "sameAccent": false,
+        "regenBg": null,
+        "regenIsRed": false,
+        "draftBeforeLen": 11,
+        "draftAfterLen": 11,
+        "queuedRow": false,
+        "queuedText": null,
+        "removedCount": 0,
+        "reviewClosed": true
+      },
+      "pass": false
+    },
+    {
+      "id": "M1",
+      "name": "回退二次确认（确认/取消/中止/原文保持/不串台）",
+      "action": "起一次优化→点回退看确认行→取消（状态应不丢）→再点回退并确定→查宿主 /runs 与输入框→再起一次验证不串台",
+      "expected": "确认行出现、取消后状态不丢、确定后浮层关闭+run 中止且 subs=0+原文逐字保持+不发消息、随后再次优化能正常完成",
+      "observed": {
+        "runningBefore": "running",
+        "confirmShown": false,
+        "stateKeptOnPrompt": "running",
+        "confirmGoneAfterCancel": true,
+        "stateAfterCancel": "running",
+        "overlayClosed": true,
+        "runCleared": false,
+        "draftKept": false,
+        "abortedRun": {
+          "id": "run13",
+          "status": "running",
+          "subs": 1,
+          "chars": 285,
+          "reasoningChars": 131,
+          "ms": 2021,
+          "aborted": false,
+          "error": null,
+          "provider": "deepseek-official",
+          "model": "deepseek-v4.1-flash-expires-on-0910",
+          "tier": "basic",
+          "direction": null,
+          "version": null,
+          "request": "把那个页面弄好看点，动画也加上",
+          "text": "## 优化后的提示词\n请把（哪个页面？）的视觉呈现改得更美观，并为其添加动画效果（动画类型、作用对象与触发时机待确认）。\n\n## 改动说明\n- 将「那个页面」收敛为占位提问「（哪个页面？）」，因原文未指明具体页面，不替用户指定。\n- 将「弄好看点」改写为「视觉呈现改得更美观」，保留原意，但不擅自指定风格、配色或布局。\n- 将「动画也加上」明确为「添加动画效果」，并补出原文未说明、需用户确认的维度（类型、对象、触发时机），以便执行。\n- 补出「请」与祈使句式，使指令语气完整通顺，不改变目标。\n\n## 边界\n- 未新增需求：没有指定任何页面、风格方向、动画库/技术方案"
+        },
+        "noResidue": false,
+        "nextRunOk": true,
+        "nextRunChars": 245
+      },
+      "pass": false
+    },
+    {
+      "id": "N1",
+      "name": "优化模型弹层（同源/独立/生效）",
+      "action": "拉 /models 与官方座位 aria-label 交叉核对；点胶囊开弹层→选一个不同的模型→查官方座位是否变→再跑一次优化查 /runs 实际模型",
+      "expected": "弹层分组数=目录分组数且模型名与官方座位同源；选择只影响优化（官方座位 aria-label 一字不变）；下一次运行 provider/model == 新选择",
+      "observed": {
+        "catalogGroups": 10,
+        "catalogModels": 35,
+        "seatLabelBefore": "选择模型，当前 deepseek-v4.1-flash-expires-on-0910，推理等级 Max",
+        "seatModelName": "deepseek-v4.1-flash-expires-on-0910",
+        "nameMatched": true,
+        "popShown": true,
+        "items": 35,
+        "groupTitles": [
+          "DeepSeek（5）",
+          "a9527-lp-gpt（3）",
+          "随想AI-grok（7）",
+          "Ollama (本地 Qwen)（3）"
+        ],
+        "picked": {
+          "provider": "deepseek-official",
+          "model": "deepseek-flash",
+          "name": "DeepSeek-V41-Flash"
+        },
+        "selection": {
+          "provider": "deepseek-official",
+          "model": "deepseek-flash",
+          "name": "DeepSeek-V41-Flash"
+        },
+        "seatLabelAfter": "选择模型，当前 deepseek-v4.1-flash-expires-on-0910，推理等级 Max",
+        "seatUnchanged": true,
+        "popClosed": true,
+        "runUsed": {
+          "provider": "deepseek-official",
+          "model": "deepseek-flash"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "P1",
+      "name": "落盘与兜底（提示/一键回默认/一致性）",
+      "action": "选一个真实不可用的模型（ollama 本机未启动）起跑→看错误提示与恢复按钮→点『恢复默认模型并重试』→查是否用回默认且落盘清空；并两次读 /state 比对",
+      "expected": "失败有可读原因、有『恢复默认』入口、点击后回到默认模型并成功出字、落盘 model=null、两次读取一致",
+      "observed": {
+        "consistent": true,
+        "before": {
+          "tier": "off",
+          "permission": "review",
+          "model": {
+            "provider": "deepseek-official",
+            "model": "deepseek-flash",
+            "name": "DeepSeek-V41-Flash"
+          }
+        },
+        "fail": {
+          "status": "error",
+          "msg": null,
+          "hasReset": false
+        },
+        "recovered": false,
+        "after": {
+          "tier": "off",
+          "permission": "review",
+          "model": {
+            "provider": "ollama",
+            "model": "qwen3:8b",
+            "name": "qwen3:8b（本地）"
+          },
+          "revision": 81
+        },
+        "finalChars": 0
+      },
+      "pass": false
+    },
+    {
+      "id": "H1",
+      "name": "真·A/B 基线（插件拆净）",
+      "action": "调用自身 dispose 移除全部监听与 UI → 派发同一 Enter → 宿主权威核对官方队列 → 撤销 → 重新装载",
+      "expected": "无监听时同一手势原样进入官方待处理队列；撤销成功；重新装载后三控件回到原位",
+      "observed": {
+        "baseline": {
+          "executed": true,
+          "interceptedWhileDisposed": false,
+          "queueBefore": 0,
+          "queuedRow": false,
+          "queuedText": null,
+          "controlsNodeGone": true
+        },
+        "removed": {
+          "ok": true,
+          "match": "DPO-基线测试-t39",
+          "removed": [],
+          "watching": false
+        },
+        "restored": true,
+        "removedCount": 0,
+        "note": "拆净后客户端快照不再刷新，故以宿主权威撤销结果为准（queuedRow 字段仅作参考）"
+      },
+      "pass": false
+    }
+  ],
+  "sweep": {
+    "ok": true,
+    "removed": [],
+    "watching": true
+  },
+  "passed": 8,
+  "total": 20,
+  "host": {
+    "userMessagesInWindow": [
+      {
+        "t": 1789057189547,
+        "sessionId": "session-ae0b2c09-6371-4db2-b1f6-0347cbe27ced",
+        "text": "现在开启档位后无法发送了",
+        "rpcId": "71436e05-bc04-4055-8db6-0190655e8c72"
+      }
+    ],
+    "userMessageCount": 1,
+    "totalRecorded": 1,
+    "evidenceFile": "C:\\Users\\WestFox\\.dsh\\plugins\\dsh-prompt-optimizer\\evidence\\selftest-report.json"
+  }
+}

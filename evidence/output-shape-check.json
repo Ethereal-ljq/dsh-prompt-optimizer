@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-09-11T10:17:14.626Z",
+  "source": "C:\\Users\\WestFox\\.dsh\\plugins\\dsh-prompt-optimizer\\evidence\\output-shape.json",
+  "passed": 3,
+  "total": 3,
+  "cases": [
+    {
+      "tier": "basic",
+      "status": "done",
+      "chars": 94,
+      "ms": 1283,
+      "metaHits": [],
+      "readerHits": [],
+      "chatHits": [],
+      "firstLine": "把那个页面弄好看点，并加上动画；同时把数据那块也修一下。",
+      "metaTitleHead": false,
+      "imperativeKinds": 3,
+      "reasoningTokens": null,
+      "totalTokens": 987,
+      "pass": true
+    },
+    {
+      "tier": "advanced",
+      "status": "done",
+      "chars": 740,
+      "ms": 9738,
+      "metaHits": [],
+      "readerHits": [],
+      "chatHits": [],
+      "firstLine": "先定位再动手：读一遍当前仓库，找出\"那个页面\"——优先当前分支或最近一次改动涉及的那个页面。若存在多",
+      "metaTitleHead": false,
+      "imperativeKinds": 6,
+      "reasoningTokens": 1141,
+      "totalTokens": 2534,
+      "pass": true
+    },
+    {
+      "tier": "extreme",
+      "status": "done",
+      "chars": 1791,
+      "ms": 12138,
+      "metaHits": [],
+      "readerHits": [],
+      "chatHits": [],
+      "firstLine": "先建立 goal：定位\"那个页面\"并修复其数据问题，然后在不破坏功能和设计体系的前提下提升视觉与动画",
+      "metaTitleHead": false,
+      "imperativeKinds": 9,
+      "reasoningTokens": 956,
+      "totalTokens": 3021,
+      "pass": true
+    }
+  ]
+}

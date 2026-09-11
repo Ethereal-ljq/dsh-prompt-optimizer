@@ -1,0 +1,102 @@
+{
+  "checkedAt": "2026-09-10T16:15:41.425Z",
+  "source": "C:\\Users\\WestFox\\.dsh\\plugins\\dsh-prompt-optimizer\\lib\\client.js",
+  "passed": 8,
+  "total": 8,
+  "cases": [
+    {
+      "name": "越界坐标(5000,4000) @1000×700 + 面板460×520",
+      "pass": true,
+      "observed": {
+        "x": 532,
+        "y": 172
+      },
+      "expect": {
+        "x": 532,
+        "y": 172
+      }
+    },
+    {
+      "name": "负坐标(-999,-999) 夹到最小边距 8",
+      "pass": true,
+      "observed": {
+        "x": 8,
+        "y": 8
+      },
+      "expect": {
+        "x": 8,
+        "y": 8
+      }
+    },
+    {
+      "name": "面板大于视口时位置退化为(8,8)",
+      "pass": true,
+      "observed": {
+        "x": 8,
+        "y": 8
+      },
+      "expect": {
+        "x": 8,
+        "y": 8
+      }
+    },
+    {
+      "name": "尺寸(4000,3000) @1280×800",
+      "pass": true,
+      "observed": {
+        "w": 1264,
+        "h": 784
+      },
+      "expect": {
+        "w": 1264,
+        "h": 784
+      }
+    },
+    {
+      "name": "尺寸(10,10) 抬到最小值",
+      "pass": true,
+      "observed": {
+        "w": 360,
+        "h": 240
+      },
+      "expect": {
+        "w": 360,
+        "h": 240
+      }
+    },
+    {
+      "name": "只给宽度(700)时不动高度",
+      "pass": true,
+      "observed": {
+        "w": 700
+      },
+      "expect": {
+        "w": 700
+      }
+    },
+    {
+      "name": "视口(300×200)比最小值还小时取最小值",
+      "pass": true,
+      "observed": {
+        "w": 360,
+        "h": 240
+      },
+      "expect": {
+        "w": 360,
+        "h": 240
+      }
+    },
+    {
+      "name": "窄窗口(620×520)首次落位可见",
+      "pass": true,
+      "observed": {
+        "x": 140,
+        "y": 96
+      },
+      "expect": {
+        "x": 8,
+        "xMax": 152
+      }
+    }
+  ]
+}
