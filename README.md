@@ -51,6 +51,26 @@ dsh --dump-config --profile web | grep -A2 'id: prompt-optimizer'   # 装配树�
 node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths:['<profile 目录>']}))"
 ```
 
+### 运行要求
+
+- **DSH Web**（`dsh web`；本插件只在 web 平台提供 UI）。
+- 至少一条可用的 LLM 路由（优化默认跟随当前会话模型；也可在插件的模型胶囊里单独指定）。
+- 插件本身**零运行时依赖、无需构建**（`lib/` 里就是可直接运行的 JavaScript）。
+
+## 一·五、分享给别人
+
+两种方式，任选：
+
+1. **给 tarball**：把 `dsh-external-dsh-prompt-optimizer-0.1.1-beta.1.tgz` 发给对方 → 按上面「方式 A」两步装好。
+2. **给 GitHub 仓库**（对方直接一条命令）：
+
+   ```bash
+   dsh plugin --profile web add github:<用户名>/<仓库名>#v0.1.1-beta.1
+   # 再把 "@dsh-external/dsh-prompt-optimizer" 加进 dsh.profile.bundles，重启
+   ```
+
+   pnpm 会拉取仓库并按包内 `package.json` 安装（仓库里 `lib/` 已是可运行代码，无需构建）。
+
 ## 二、30 秒上手
 
 1. 在输入框正常打字，按 **Enter**（或点发送）。
