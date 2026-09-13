@@ -23,9 +23,9 @@ The moment you press Enter in the composer, your message is **not** sent directl
 - It is a **relay, not a chat partner**: the optimizer AI knows it is "conveying the user's intent to the working AI". It does **not answer you, does not do the work for you, and does not ask you questions**. Its output is the command body itself (no meta sections such as "Optimized prompt / Change log"), ready to be pasted to the downstream AI.
 - The optimizer **model, tier and permission are independent of your conversation** — your chat model is never touched.
 - **Tier and permission are per-session**: setting session A to "Extreme + Auto" leaves session B untouched.
-- The mini window is **session-isolated**: a window triggered in A never pops up in B, and comes back as-is when you return to A (if it is still waiting for your decision).
+- The **interception card is session-isolated**: a card triggered in A never pops up in B, and comes back as-is when you return to A (if it is still waiting for your decision).
 
-Author: **啃轮胎的西狐** · Version **0.1.1beta1** · Release date **2026/09/11** (the same credit appears at the bottom of the in-plugin `?` panel)
+Author: **啃轮胎的西狐** · Version **0.1.1beta1** · Release date **2026/09/11** (the same credit appears at the bottom of the in-plugin Help panel)
 
 ---
 
@@ -78,35 +78,41 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 ## 2. Quick start (30 seconds)
 
 1. Type as usual in the composer and press **Enter** (or click send).
-2. The message is intercepted and a **mini window** appears in the bottom-right corner with two panes: **Thinking** (the optimizer's reasoning, with its token count) and **Output** (the command you are about to send).
-3. With permission **Review**: edit the output text directly → click **Confirm & send**; not satisfied? click **Regenerate** (it asks you for a direction first).
+2. The message is intercepted and a **collapsible card** appears **directly above the composer**, its header row showing the state (`Optimizing…` / `Needs review` / `Failed`).
+3. With permission **Review**: the card expands automatically and **Output** is the command about to be sent — edit it directly → click **Confirm & send**; not satisfied? click **Regenerate** (it asks you for a direction first).
 4. With permission **Auto**: it is sent automatically as soon as optimization finishes — no action needed.
-5. Do not want to optimize? Click **‹ Roll back** (stop + close + **send nothing** + your original text stays in the composer), or **Send as-is** to send your original text.
+5. Do not want to optimize? Click **‹ Roll back** (stop + collapse + **send nothing** + your original text stays in the composer), or **Send original** to send your original text.
 
-> The three controls left of the composer, from left to right: **Tier** (slider), **Permission** (slider), **Model** (pill), followed by **Help (`?`)**. The `?` panel contains the same short tutorial plus the author credit.
+> Every entry point is now a single pill at the bottom of the composer: **`✦ Optimize <current tier> ˅`**, right after the access selector. Clicking it opens a vertical menu: **Tier / Permission / Model / Help**. It is the same control, in the same place, both inside a session and on the new-conversation screen.
 
 ---
 
-## 3. Choosing the three controls
+## 3. What is inside that pill
 
-| Control | Values | Notes |
+Click the `✦ Optimize …` pill at the bottom of the composer; from top to bottom it holds four groups:
+
+| Group | Values | Notes |
 |---|---|---|
 | **Tier** | Off / Basic / Advanced / Extreme | Off = no interception at all; Basic = just say it clearly (~3 s); Advanced = add the obviously-needed constraints and acceptance criteria (~20 s); Extreme = **read the real project structure** (read-only, never writes) and produce a staged action plan + acceptance criteria + contingencies (~20 s) |
-| **Permission** | Review / Auto | Review = editable output, sent only when you confirm; Auto = sent as soon as optimization finishes (**and if optimization fails, the original text is sent** — it never silently swallows your message) |
-| **Model** | any provider/model | Affects optimization only, never your chat model; the popover marks the current session model; unreachable providers are labelled "unreachable" and never slow the list down |
+| **Permission** | Review / Auto | Review = editable output, sent only when you confirm; Auto = sent as soon as optimization finishes (**and if optimization fails, the original text is sent** — it never silently swallows your message). Greyed out while Tier is "Off" |
+| **Model** | any provider/model | Affects optimization only, never your chat model; the list marks the current session model; unreachable providers are labelled "unreachable" and never slow the list down |
+| **Help** | — | The short tutorial (how it works / tier / permission / card buttons + the recommended combination); a small **‹ Back** in its top-left corner returns to the menu |
 
 > **To use every capability automatically, use [Extreme] + [Auto].**
 
 ---
 
-## 4. The mini window
+## 4. The interception card
 
-- **Draggable** — drag by the title bar.
-- **Resizable** — drag the bottom-right grip; the size is **remembered** for the next window.
-- **Never lost** — after hiding or switching sessions it is clamped back into view.
-- **Session-isolated** — the window belongs to the session that triggered it.
-- **Key buttons never disappear** — the bottom is a **persistent action bar** (Confirm / Regenerate / Roll back / Send as-is / Retry) that does not scroll with content; on very short windows the content area shrinks automatically.
-- **Thinking token count** — the status row shows the session total (e.g. `Σ 1.1k tok`), the **Thinking** pane title shows the **reasoning tokens** (`— tok` when the provider does not report usage), and the **Output** pane title shows output tokens plus character counts.
+When a message is intercepted, the card appears **directly above the composer** — the same place the official todo panel and queued-message panel use.
+
+- **Fixed position, no floating** — it is aligned with the composer and is an ordinary block in the page layout: nothing to drag, no size to resize, and it never covers the conversation.
+- **Collapsible** — the header row (status dot + title + state + tokens) *is* the toggle. It stays collapsed while running (barely any space), and **expands automatically in the review state** so you can see what is about to be sent.
+- **Output is the main character** — directly editable, and its height grows with the content (a single scrollbar appears only when it is genuinely very long).
+- **"Thinking" and "Checked" are collapsed to one line each** — click the title to expand. The Thinking title shows this run's reasoning tokens (`— tok` when the provider does not report usage).
+- **A fixed four-button action bar** — `‹ Roll back` / `Send original` / `Regenerate` / `Confirm & send`. Their position and count **never change** in any state (unavailable ones are merely greyed out while running), so you never have to hunt for a different set of buttons.
+- **State at a glance** — `Optimizing…` shows a pulsing blue dot, `Needs review` a green dot, `Failed` a red dot; the header's right side shows the total usage (e.g. `Σ 1.1k tok`).
+- **Session-isolated** — the card belongs to the session that triggered it.
 
 ---
 
@@ -114,10 +120,10 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 
 | Symptom | Cause / fix |
 |---|---|
-| Enter seems to do nothing and the message is not sent | You are inside the optimization flow — watch the mini window; if it is not visible, switch to that session and it reappears |
+| Enter seems to do nothing and the message is not sent | You are inside the optimization flow — watch the **card above the composer**; if it is not visible, switch to that session and it reappears |
 | Optimization is slow | Advanced/Extreme take about 20 s (Extreme also reads project structure). Use **Basic** for speed |
 | "Optimizer model unavailable → sent the original text" | The selected model is unreachable (e.g. local `ollama` not running). The plugin **falls back to the session default model** automatically |
-| Temporarily disable it | Drag the **Tier** slider to the far left ("Off") |
+| Temporarily disable it | Open the pill → Tier → "Off" |
 | A provider is labelled "unreachable" | That provider is unavailable right now (not running / no credentials); other models are unaffected |
 | Can I switch the UI to English? | **Not yet** — the UI is currently Chinese-only |
 
@@ -129,15 +135,17 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 dsh plugin --profile web remove @dsh-external/dsh-prompt-optimizer
 ```
 
-If you used Option B, also delete the `insert` entry from `cordis.patch.yml`. Plugin settings live in `~/.dsh/prompt-optimizer.json` (tier / permission / model / window geometry / per-session settings); delete it too for a full cleanup.
+If you used Option B, also delete the `insert` entry from `cordis.patch.yml`. Plugin settings live in `~/.dsh/prompt-optimizer.json` (tier / permission / model / per-session settings); delete it too for a full cleanup.
 
 ---
 
 ## 7. Implementation notes (for people who want to modify it)
 
-- **Two halves**: `lib/index.js` (host: tier system prompts and the relay framing, read-only tool loop, SSE streaming runs, model catalog, state persistence, HTTP routes) + `lib/client.js` (browser: control row, model/help popovers, mini window, capture-phase interception of Enter and the send button).
+- **Two halves**: `lib/index.js` (host: tier system prompts and the relay framing, read-only tool loop, SSE streaming runs, model catalog, state persistence, HTTP routes) + `lib/client.js` (browser: the entry pill, its vertical menu, the help panel, the interception card above the composer, capture-phase interception of Enter and the send button).
+- **The UI reuses official primitives wherever possible**: the pill and the menu it opens are built on the shell-provided `@deepseek-ai/dsh-client-ui-primitives` (`Menu`, `Icon*16`, `useAnchoredPosition`, …). Shell chrome, row height, the selected ✓, portal positioning, outside-click dismissal and viewport clamping are all official implementations — which is why it looks like DSH's own menus and will follow theme changes on its own.
+- **Mount points**: the entry pill mounts at `conversation.input.left` (present both inside a session and on the new-conversation screen, with identical behaviour); the interception card mounts at `conversation.input.dock` (the same slot as the official todo and queued-message panels — an ordinary in-flow block, neither floating nor covering anything).
 - **Interception happens in the capture phase** on `window` (before React and the editor's own handlers): `Shift+Enter`, `/` commands, empty drafts, attachments-only, and Enter outside the composer card all pass through.
-- **The official send path is untouched**: confirming uses the official `inputActions.setDraft()` + `submit()`, exactly the same route as a manual send.
+- **The official send path is untouched**: confirming uses the official `inputActions.setDraft()` + `submit()`, exactly the same route as a manual send; "Send original" uses the full original captured at interception time.
 - The artifact is plain JavaScript (no build step). `ACCEPTANCE.md` is a cell-by-cell acceptance checklist; `evidence/` holds machine traces (self-test reports, telemetry, comparisons).
 
 ---
@@ -145,7 +153,7 @@ If you used Option B, also delete the `insert` entry from `cordis.patch.yml`. Pl
 ## 8. Privacy and boundaries
 
 - Optimization requests send only **the text you typed**, plus (Advanced/Extreme) a **directory-tree summary and key file names of the current project**. Extreme-tier read-only checks are confined to the project root: no writes, no command execution.
-- The mini window sends nothing by default: only "Confirm", "Auto" and "Send as-is" hand content back to the official send path.
+- The interception card sends nothing by default: only "Confirm & send", "Auto" and "Send original" hand content back to the official send path.
 - The plugin is a local client + host plugin and talks to no third-party service.
 
 ---
