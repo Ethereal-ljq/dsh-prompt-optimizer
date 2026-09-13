@@ -95,7 +95,7 @@ Click the `✦ Optimize …` pill at the bottom of the composer; from top to bot
 |---|---|---|
 | **Tier** | Off / Basic / Advanced / Extreme | Off = no interception at all; Basic = just say it clearly (~3 s); Advanced = add the obviously-needed constraints and acceptance criteria (~20 s); Extreme = **read the real project structure** (read-only, never writes) and produce a staged action plan + acceptance criteria + contingencies (~20 s) |
 | **Permission** | Review / Auto | Review = editable output, sent only when you confirm; Auto = sent as soon as optimization finishes (**and if optimization fails, the original text is sent** — it never silently swallows your message). Greyed out while Tier is "Off" |
-| **Model** | any provider/model | Affects optimization only, never your chat model; the list marks the current session model; unreachable providers are labelled "unreachable" and never slow the list down |
+| **Model** | any provider/model | Affects optimization only, never your chat model. **Providers are collapsed**: each one takes a single row by default (`▸ DeepSeek · 4 models`), and clicking it reveals that provider's models. **The provider holding the current selection expands automatically when you open the menu**, the rest stay collapsed — so even with four or five providers configured the menu stays short. Unreachable providers are labelled "unreachable" and never slow the list down |
 | **Help** | — | The short tutorial (how it works / tier / permission / card buttons + the recommended combination); a small **‹ Back** in its top-left corner returns to the menu |
 
 > **To use every capability automatically, use [Extreme] + [Auto].**
