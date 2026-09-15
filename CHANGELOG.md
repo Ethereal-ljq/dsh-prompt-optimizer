@@ -2,9 +2,15 @@
 
 本项目版本号遵循 `0.x` 阶段的语义化：`0.<minor>.<patch>`；预发布版本带 `-beta.N` 后缀（面板中显示为 `0.1.1beta1`）。
 
-> 本仓库是 [WestFox-AwA/dsh-prompt-optimizer](https://github.com/WestFox-AwA/dsh-prompt-optimizer) 的 **fork**。
-> **功能层与上游 v0.1.9-beta.1 对齐**（上下文双模式、难度→开发长度编排、提示词硬化、auto-send 修复等，见下方各版本小节）；
-> **界面层是本 fork 自己的**。下面从 v0.1.9-beta.1 起是上游的发布历史。
+> **本插件是一个独立插件**（包名 `@dsh-external/dsh-prompt-toolkit`），引擎部分 fork 自
+> [WestFox-AwA/dsh-prompt-optimizer](https://github.com/WestFox-AwA/dsh-prompt-optimizer)（BSD-3-Clause，署名保留）。
+> **功能层与上游 v0.1.9-beta.1 对齐**（上下文双模式、难度→开发长度编排、提示词硬化、auto-send 修复等）；
+> **界面与交互是本项目自有的**：一枚胶囊的设置菜单、右侧栏里的优化面板与收藏夹、对话内收藏按钮 —— 这些上游都没有。
+> 下面从 v0.1.9-beta.1 起是上游的发布历史。
+>
+> **改名说明**：`0.3.0-beta.1` 之前叫 `@dsh-external/dsh-prompt-optimizer`（与上游**同名**，导致两者无法同时安装）。
+> 改名后可以和上游并存对照；数据不受影响 —— 状态文件会从 `~/.dsh/prompt-optimizer.json`
+> 一次性搬到 `~/.dsh/prompt-toolkit.json`（旧文件不删）。
 
 ## 未发布 — 界面搬进右侧栏
 

@@ -1,5 +1,5 @@
 {
-  "name": "@dsh-external/dsh-prompt-optimizer",
+  "name": "@dsh-external/dsh-prompt-toolkit",
   "version": "0.3.0-beta.1",
   "description": "DSH Web 输入框接管：发送前用独立 AI（传话者）把提示词优化成可直接发给工作 AI 的命令（基于上游 0.1.9 功能 + 本 fork 的界面改造：入口合并为一枚胶囊、拦截卡贴在输入框上方）",
   "type": "module",
@@ -19,7 +19,7 @@
     "dsh",
     "dsh-plugin",
     "prompt",
-    "prompt-optimizer",
+    "prompt-toolkit",
     "llm",
     "web"
   ],

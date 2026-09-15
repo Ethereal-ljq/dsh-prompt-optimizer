@@ -1,4 +1,4 @@
-# dsh-prompt-optimizer · 提示词优化器（DSH Web 插件）
+# dsh-prompt-toolkit · 提示词工作台（DSH Web 插件）
 
 **中文** ｜ [English](README.en.md)
 
@@ -40,10 +40,10 @@
 ```bash
 # 1) 装包（GitHub 仓库 / tarball / 本地目录都行）
 dsh plugin --profile web add github:WestFox-AwA/dsh-prompt-optimizer#v0.1.1-beta.1
-dsh plugin --profile web add ./dsh-external-dsh-prompt-optimizer-0.1.1-beta.1.tgz
+dsh plugin --profile web add ./dsh-external-dsh-prompt-toolkit-0.3.0-beta.1.tgz
 
 # 2) 在 ~/.dsh/profiles/web/package.json 的 dsh.profile.bundles 里加一行：
-#      "@dsh-external/dsh-prompt-optimizer"
+#      "@dsh-external/dsh-prompt-toolkit"
 ```
 
 重启 DSH 即生效。**为什么还要改 bundles**：`dsh plugin` 只是把参数转发给 pnpm（只负责安装），而"哪些包作为 bundle 层参与装配"由 profile 的 `dsh.profile.bundles` 决定。本插件自带 `cordis.patch.yml`，会在装配时把自己的 entry 插进根条目表 —— 与 `@dsh-external/dsh-super-injector`、`@dsh-external/dsh-graded-mode` **完全同一写法**。
@@ -56,7 +56,7 @@ dsh plugin --profile web add ./dsh-external-dsh-prompt-optimizer-0.1.1-beta.1.tg
 # ~/.dsh/profiles/web/cordis.patch.yml （顶层 YAML 数组）
 - insert:
     - id: prompt-optimizer
-      name: '@dsh-external/dsh-prompt-optimizer'
+      name: '@dsh-external/dsh-prompt-toolkit'
       config: {}
 ```
 
@@ -68,7 +68,7 @@ dsh plugin --profile web add ./dsh-external-dsh-prompt-optimizer-0.1.1-beta.1.tg
 
 ```bash
 dsh --dump-config --profile web | grep -A2 'id: prompt-optimizer'   # 装配树里有它，且只有一条
-node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths:['<profile 目录>']}))"
+node -e "console.log(require.resolve('@dsh-external/dsh-prompt-toolkit',{paths:['<profile 目录>']}))"
 ```
 
 ### 运行要求
@@ -175,7 +175,7 @@ node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths
 ## 七、卸载
 
 ```bash
-dsh plugin --profile web remove @dsh-external/dsh-prompt-optimizer
+dsh plugin --profile web remove @dsh-external/dsh-prompt-toolkit
 ```
 
 若用"方式 B"安装，请同时删除 `cordis.patch.yml` 里那条 `insert`。插件设置存在 `~/.dsh/prompt-optimizer.json`（档位 / 权限 / 模型 / 上下文 / 按会话设置），

@@ -41,7 +41,7 @@ dsh plugin --profile web add github:WestFox-AwA/dsh-prompt-optimizer#v0.1.1-beta
 dsh plugin --profile web add ./dsh-external-dsh-prompt-optimizer-0.1.1-beta.1.tgz
 
 # 2) add one line to dsh.profile.bundles in ~/.dsh/profiles/web/package.json:
-#      "@dsh-external/dsh-prompt-optimizer"
+#      "@dsh-external/dsh-prompt-toolkit"
 ```
 
 Restart DSH and you are done. **Why the bundles edit is needed**: `dsh plugin` merely forwards its arguments to pnpm (installation only); which packages take part in assembly as bundle layers is decided by `dsh.profile.bundles`. This package ships its own `cordis.patch.yml` and inserts its entry into the root entry list during assembly — **exactly the same pattern** as `@dsh-external/dsh-super-injector` and `@dsh-external/dsh-graded-mode`.
@@ -52,7 +52,7 @@ Restart DSH and you are done. **Why the bundles edit is needed**: `dsh plugin` m
 # ~/.dsh/profiles/web/cordis.patch.yml (a top-level YAML array)
 - insert:
     - id: prompt-optimizer
-      name: '@dsh-external/dsh-prompt-optimizer'
+      name: '@dsh-external/dsh-prompt-toolkit'
       config: {}
 ```
 
@@ -64,7 +64,7 @@ The package still has to be resolvable (`dsh plugin add`, or a manually created 
 
 ```bash
 dsh --dump-config --profile web | grep -A2 'id: prompt-optimizer'   # present, and exactly once
-node -e "console.log(require.resolve('@dsh-external/dsh-prompt-optimizer',{paths:['<profile dir>']}))"
+node -e "console.log(require.resolve('@dsh-external/dsh-prompt-toolkit',{paths:['<profile dir>']}))"
 ```
 
 ### Requirements
@@ -132,7 +132,7 @@ When a message is intercepted, the card appears **directly above the composer** 
 ## 6. Uninstall
 
 ```bash
-dsh plugin --profile web remove @dsh-external/dsh-prompt-optimizer
+dsh plugin --profile web remove @dsh-external/dsh-prompt-toolkit
 ```
 
 If you used Option B, also delete the `insert` entry from `cordis.patch.yml`. Plugin settings live in `~/.dsh/prompt-optimizer.json` (tier / permission / model / per-session settings); delete it too for a full cleanup.

@@ -1,4 +1,4 @@
-# dsh-prompt-optimizer bundle 层：插入插件行。
+# dsh-prompt-toolkit bundle 层：插入插件行。
 #
 # 这个文件让本包成为一个"标准 DSH 插件包"：当包名被列进 profile 的
 # dsh.profile.bundles 时，DSH 会读取本补丁层并把下面这条 entry 插进根条目表 ——
@@ -9,6 +9,6 @@
 # 而 dsh.profile.bundles 里的包必须在自己的 dsh.bundle.patch 层里声明自己的 entry
 # （与 @dsh-external/dsh-super-injector、@dsh-external/dsh-graded-mode 同一写法）。
 - insert:
-    - id: prompt-optimizer
-      name: '@dsh-external/dsh-prompt-optimizer'
+    - id: prompt-toolkit
+      name: '@dsh-external/dsh-prompt-toolkit'
       config: {}
